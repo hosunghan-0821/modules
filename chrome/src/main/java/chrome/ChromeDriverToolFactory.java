@@ -27,10 +27,18 @@ public class ChromeDriverToolFactory {
         factoryHashMap.put(key, chromeDriverTool);
     }
 
-    public void makePrivateChromeDriverTool(String key) {
+    public void makeChromeDriverTool(String key,long waitTime) {
+        ChromeDriver chromeDriver = new ChromeDriver(setOptions());
+        WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofMillis(waitTime)); // 최대 5초 대기
+        ChromeDriverTool chromeDriverTool = new ChromeDriverTool(chromeDriver, wait);
+
+        factoryHashMap.put(key, chromeDriverTool);
+    }
+
+    public void makePrivateChromeDriverTool(String key,long waitTime) {
 
         ChromeDriver chromeDriver = new ChromeDriver(setPrivateOptions());
-        WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofMillis(5000)); // 최대 5초 대기
+        WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofMillis(waitTime)); // 최대 5초 대기
         ChromeDriverTool chromeDriverTool = new ChromeDriverTool(chromeDriver, wait);
 
         factoryHashMap.put(key, chromeDriverTool);

@@ -19,4 +19,8 @@ public class DiscordString {
     public static final Long STYLE_NEW_PRODUCT_CHANNEL = 1274251649761939476L;
 
     public static final Long STYLE_DISCOUNT_CHANNEL = 1274251692829052989L;
+
+    public static final Long VIETTI_NEW_PRODUCT_CHANNEL = 1285139896650174535L;
+
+    public static final Long VIETTI_DISCOUNT_CHANNEL = 1285140058118029333L;
 }
