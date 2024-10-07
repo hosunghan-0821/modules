@@ -21,7 +21,7 @@ public class S3UploaderService {
 
     @Setter
     @Getter
-    private boolean isAllowedUpload = true;
+    private boolean isAllowedUpload = false;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
