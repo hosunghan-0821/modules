@@ -56,8 +56,10 @@ public class ChromeDriverToolFactory {
         privateOptions.addArguments("--disable-blink-features=AutomationControlled");
         privateOptions.setExperimentalOption("detach", true);
 
-        privateOptions.addArguments("--user-data-dir=/Users/hanhosung/private/chrome");
-        privateOptions.addArguments("--profile-directory=private");
+        privateOptions.addArguments(("--disable-extensions"));
+        privateOptions.addArguments("--user-data-dir=/Users/hanhosung/private/private");
+
+
         return privateOptions;
     }
 

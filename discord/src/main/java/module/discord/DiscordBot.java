@@ -97,6 +97,12 @@ public class DiscordBot extends ListenerAdapter {
         }
     }
 
+    public void sendMessage(Long channelId, String message) {
+        final TextChannel textChannel = jda.getTextChannelById(channelId);
+        assert textChannel != null;
+        textChannel.sendMessage(message).queue(); // 품번도 같이 전송
+    }
+
     public void sendNewProductInfoCommon(Long channelId, String description, String productLink, String imageUrlOrNull, String[] skuInfo) {
         final TextChannel textChannel = jda.getTextChannelById(channelId);
         assert (textChannel != null);
