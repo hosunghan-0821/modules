@@ -19,6 +19,7 @@ public class ChromeDriverToolFactory {
     public ChromeDriverTool getChromeDriverTool(String key) {
         return factoryHashMap.get(key);
     }
+
     public void makeChromeDriverTool(String key) {
         ChromeDriver chromeDriver = new ChromeDriver(setOptions());
         WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofMillis(5000)); // 최대 5초 대기
@@ -27,7 +28,7 @@ public class ChromeDriverToolFactory {
         factoryHashMap.put(key, chromeDriverTool);
     }
 
-    public void makeChromeDriverTool(String key,long waitTime) {
+    public void makeChromeDriverTool(String key, long waitTime) {
         ChromeDriver chromeDriver = new ChromeDriver(setOptions());
         WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofMillis(waitTime)); // 최대 5초 대기
         ChromeDriverTool chromeDriverTool = new ChromeDriverTool(chromeDriver, wait);
@@ -35,9 +36,9 @@ public class ChromeDriverToolFactory {
         factoryHashMap.put(key, chromeDriverTool);
     }
 
-    public void makePrivateChromeDriverTool(String key,long waitTime) {
+    public void makePrivateChromeDriverTool(String key, long waitTime, String userDataDirRelativePath) {
 
-        ChromeDriver chromeDriver = new ChromeDriver(setPrivateOptions());
+        ChromeDriver chromeDriver = new ChromeDriver(setPrivateOptions(userDataDirRelativePath));
         WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofMillis(waitTime)); // 최대 5초 대기
         ChromeDriverTool chromeDriverTool = new ChromeDriverTool(chromeDriver, wait);
 
@@ -45,8 +46,15 @@ public class ChromeDriverToolFactory {
 
     }
 
-    private ChromeOptions setPrivateOptions(){
+    private ChromeOptions setPrivateOptions(String userDataDirRelativePath) {
+
+        String currentDir = System.getProperty("user.dir");
+
+        String userDataDir = currentDir + userDataDirRelativePath;
         ChromeOptions privateOptions = new ChromeOptions();
+
+        System.out.println("userDataDir" + userDataDir);
+
         privateOptions.addArguments("--no-sandbox");
         privateOptions.addArguments("window-size=1920x1080");
         privateOptions.addArguments("start-maximized");
@@ -57,6 +65,8 @@ public class ChromeDriverToolFactory {
         privateOptions.setExperimentalOption("detach", true);
 
         privateOptions.addArguments(("--disable-extensions"));
+//        privateOptions.addArguments("--user-data-dir=" + userDataDir);
+
         privateOptions.addArguments("--user-data-dir=/Users/hanhosung/private/private");
 
 

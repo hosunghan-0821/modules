@@ -82,7 +82,10 @@ public class DiscordBot extends ListenerAdapter {
             returnMessage = discordMessageProcessor.responseServerRunningOrNull("biffi", event.getMessage().getContentDisplay(), chromeDriverToolFactory.getChromeDriverTool("biffi"));
         } else if (channelId.equals(DiscordString.STYLE_NEW_PRODUCT_CHANNEL) || channelId.equals(DiscordString.STYLE_DISCOUNT_CHANNEL)) {
             returnMessage = discordMessageProcessor.responseServerRunningOrNull("style", event.getMessage().getContentDisplay(), chromeDriverToolFactory.getChromeDriverTool("style"));
-        } else if (channelId.equals(DiscordString.GEBENE_NEW_PRODUCT_CHANNEL)) {
+        } else if(channelId.equals(DiscordString.ANOTONIOLI_NEW_PRODUCT_CHANNEL) || channelId.equals(DiscordString.ANOTONIOLI_DISCOUNT_CHANNEL)) {
+            returnMessage = discordMessageProcessor.responseServerRunningOrNull("antonioli", event.getMessage().getContentDisplay(), chromeDriverToolFactory.getChromeDriverTool("antonioli"));
+        }
+        else if (channelId.equals(DiscordString.GEBENE_NEW_PRODUCT_CHANNEL)) {
             if (event.getMessage().getContentDisplay().contains("!upload")) {
                 returnMessage = discordMessageProcessor.responseServerRunningS3ServiceOrNull(event.getMessage().getContentDisplay(), s3UploaderService);
             } else {
