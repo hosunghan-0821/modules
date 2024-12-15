@@ -24,7 +24,7 @@ public class DiscordString {
 
     public static final Long VIETTI_DISCOUNT_CHANNEL = 1285140058118029333L;
 
-    public static final Long ANOTONIOLI_NEW_PRODUCT_CHANNEL = 1299919157051129898L;
+    public static final Long EIC_NEW_PRODUCT_CHANNEL = 1299919157051129898L;
 
-    public static final Long ANOTONIOLI_DISCOUNT_CHANNEL = 1299919215213678662L;
+    public static final Long EIC_DISCOUNT_CHANNEL = 1299919215213678662L;
 }
