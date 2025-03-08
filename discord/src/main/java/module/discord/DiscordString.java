@@ -4,6 +4,8 @@ public class DiscordString {
 
     public static final Long ALL_CATEGORIES_CHANNEL = 1220650964852408354L;
     public static final Long PROMO_CHANNEL = 1220973782206910554L;
+
+    public static final Long JULIAN_LEMAIRE = 1342084695525163048L;
     public static final Long EXCHANGE_CHANNEL = 1220967225955975239L;
 
     public static final Long DOUBLE_F_NEW_PRODUCT_CHANNEL = 1221357982235758602L;
@@ -27,4 +29,8 @@ public class DiscordString {
     public static final Long EIC_NEW_PRODUCT_CHANNEL = 1299919157051129898L;
 
     public static final Long EIC_DISCOUNT_CHANNEL = 1299919215213678662L;
+
+    public static final Long ZENTE_NEW_PRODUCT_CHANNEL = 1347829780174602345L;
+
+    public static final Long ZENTE_DISCOUNT_CHANNEL = 1347829868649386054L;
 }
