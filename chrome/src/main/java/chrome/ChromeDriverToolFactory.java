@@ -36,6 +36,14 @@ public class ChromeDriverToolFactory {
         factoryHashMap.put(key, chromeDriverTool);
     }
 
+    public void makeChromeDriverToolWithBackGroundOption(String key) {
+        ChromeDriver chromeDriver = new ChromeDriver(setOptionsWithBackgrounds());
+        WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofMillis(5000)); // 최대 5초 대기
+        ChromeDriverTool chromeDriverTool = new ChromeDriverTool(chromeDriver, wait);
+
+        factoryHashMap.put(key, chromeDriverTool);
+    }
+
     public void makePrivateChromeDriverTool(String key, long waitTime, String userDataDirRelativePath) {
 
         ChromeDriver chromeDriver = new ChromeDriver(setPrivateOptions(userDataDirRelativePath));
@@ -86,6 +94,23 @@ public class ChromeDriverToolFactory {
         options.addArguments("--disable-automation");
         options.addArguments("--disable-blink-features=AutomationControlled");
         options.setExperimentalOption("detach", true);
+        return options;
+    }
+
+    private ChromeOptions setOptionsWithBackgrounds() {
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless"); // 백그라운드 실행 (Headless 모드)
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage"); // /dev/shm 사용 문제 해결
+        options.addArguments("window-size=1920x1080");
+        options.addArguments("start-maximized");
+        options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+        options.setExperimentalOption("useAutomationExtension", false);
+        options.addArguments("--disable-automation");
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.setExperimentalOption("detach", true);
+
         return options;
     }
 
