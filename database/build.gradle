@@ -1,6 +1,29 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'mysql:mysql-connector-java:8.0.33'
+
+    // querydsl 의존성 추가
+    implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api:3.1.0"
 }
+
+//querydsl 추가 시작
+sourceSets {
+    main {
+        java {
+            // annotationProcessor 결과물을 IDE/컴파일러가 인식하도록
+            srcDir "$buildDir/generated/sources/annotationProcessor/java/main"
+        }
+    }
+}
+
+//querydsl 추가 끝
 
