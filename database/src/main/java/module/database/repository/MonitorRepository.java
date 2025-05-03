@@ -8,6 +8,7 @@ import module.database.entity.QMonitor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static module.database.entity.QMonitor.monitor;
 
@@ -22,6 +23,13 @@ public class MonitorRepository {
 
         // 모니터링 사이트가 많지 않기 때문에 전체조회.. 많아봐야 10개
         return jpaQueryFactory.selectFrom(monitor).fetch();
+
+    }
+
+    public Optional<Monitor> findById(Long id) {
+
+        Monitor findMonitor = jpaQueryFactory.selectFrom(monitor).where(monitor.id.eq(id)).fetchOne();
+        return Optional.ofNullable(findMonitor);
 
     }
 
