@@ -58,15 +58,21 @@ public class ProductRepository {
     }
 
     public void deleteAllProductSize(List<Long> deleteIds) {
-        jpaQueryFactory
-                .delete(productSize)
-                .where(productSize.id.in(deleteIds))
-                .execute();
+        jpaQueryFactory.delete(productSize).where(productSize.id.in(deleteIds)).execute();
         entityManager.flush();
     }
 
     public void saveProduct(Product product) {
         entityManager.persist(product);
         entityManager.flush();
+    }
+
+    public void deleteAllProduct(List<Long> productIds) {
+        jpaQueryFactory.delete(productSize).where(productSize.product.id.in(productIds)).execute();
+        jpaQueryFactory.delete(product).where(product.id.in(productIds)).execute();
+    }
+
+    public List<Product> findAllByIds(List<Long> productIds) {
+        return jpaQueryFactory.selectFrom(product).where(product.id.in(productIds)).fetch();
     }
 }
