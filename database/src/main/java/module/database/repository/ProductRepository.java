@@ -1,6 +1,7 @@
 package module.database.repository;
 
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -24,6 +25,7 @@ import java.util.Optional;
 import static module.database.entity.QMonitor.monitor;
 import static module.database.entity.QProduct.product;
 import static module.database.entity.QProductSize.productSize;
+import static org.springframework.util.StringUtils.hasText;
 
 @Repository
 @RequiredArgsConstructor
@@ -32,9 +34,13 @@ public class ProductRepository {
     private final JPAQueryFactory jpaQueryFactory;
     private final EntityManager entityManager;
 
-    public Page<Product> getProducts(Pageable pageable) {
+    public Page<Product> getProducts(Pageable pageable, String keyword) {
+
+        BooleanExpression predicate = keywordPredicate(keyword);
+
         List<Product> content = jpaQueryFactory
                 .selectFrom(product)
+                .where(predicate)
                 .orderBy(product.id.desc())
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
@@ -42,7 +48,9 @@ public class ProductRepository {
 
         JPAQuery<Long> countQuery = jpaQueryFactory
                 .select(product.count())
-                .from(product);
+                .from(product)
+                .where(predicate);
+
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
@@ -74,5 +82,19 @@ public class ProductRepository {
 
     public List<Product> findAllByIds(List<Long> productIds) {
         return jpaQueryFactory.selectFrom(product).where(product.id.in(productIds)).fetch();
+    }
+
+    /**
+     * keyword 가 널이거나 빈 문자열이면 null 리턴(조건 미적용),
+     * 그 외엔 SKU OR name OR description 에 LIKE 검색
+     */
+    private BooleanExpression keywordPredicate(String keyword) {
+        if (!hasText(keyword)) {
+            return null;
+        }
+
+        return product.sku.containsIgnoreCase(keyword)
+                .or(product.boutique.equalsIgnoreCase(keyword))
+                .or(product.brand.equalsIgnoreCase(keyword));
     }
 }
