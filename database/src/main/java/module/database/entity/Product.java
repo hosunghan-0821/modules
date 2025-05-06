@@ -77,4 +77,22 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductSize> productSize = new ArrayList<>();
 
+    /**
+     * 상품 정보 일괄 갱신
+     */
+    public void update(
+            String boutique,
+            String brand,
+            String sku,
+            String name,
+            String link,
+            String imageSrc
+    ) {
+        this.boutique  = boutique;
+        this.brand     = brand;
+        this.sku       = sku;
+        this.name      = name;
+        this.link      = link;
+        this.imageSrc  = imageSrc;
+    }
 }
