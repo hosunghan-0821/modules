@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import module.database.dto.Boutique;
 import module.database.entity.Monitor;
 import module.database.entity.Product;
 import module.database.entity.ProductSize;
@@ -18,6 +19,7 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -87,6 +89,17 @@ public class ProductRepository {
     public void deleteProductSize(Long productId) {
         jpaQueryFactory.delete(productSize).where(product.id.eq(productId)).execute();
     }
+
+    public Optional<Product> findAutoOrderProduct(String sku, String boutique) {
+        Product result = jpaQueryFactory
+                .selectFrom(product)
+                .where(product.sku.eq(sku).and(product.boutique.eq(boutique)))
+                .fetchOne();
+
+        return Optional.ofNullable(result);
+    }
+
+    ;
 
     /**
      * keyword 가 널이거나 빈 문자열이면 null 리턴(조건 미적용),
