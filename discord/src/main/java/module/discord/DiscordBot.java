@@ -3,6 +3,7 @@ package module.discord;
 
 import chrome.ChromeDriverToolFactory;
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -34,6 +35,8 @@ public class DiscordBot extends ListenerAdapter {
     private ChromeDriverToolFactory chromeDriverToolFactory;
 
     private S3UploaderService s3UploaderService;
+
+    @Getter
     private JDA jda;
 
     @Value("${discord.bot.token}")
@@ -82,10 +85,9 @@ public class DiscordBot extends ListenerAdapter {
             returnMessage = discordMessageProcessor.responseServerRunningOrNull("biffi", event.getMessage().getContentDisplay(), chromeDriverToolFactory.getChromeDriverTool("biffi"));
         } else if (channelId.equals(DiscordString.STYLE_NEW_PRODUCT_CHANNEL) || channelId.equals(DiscordString.STYLE_DISCOUNT_CHANNEL)) {
             returnMessage = discordMessageProcessor.responseServerRunningOrNull("style", event.getMessage().getContentDisplay(), chromeDriverToolFactory.getChromeDriverTool("style"));
-        } else if(channelId.equals(DiscordString.EIC_NEW_PRODUCT_CHANNEL) || channelId.equals(DiscordString.EIC_DISCOUNT_CHANNEL)) {
+        } else if (channelId.equals(DiscordString.EIC_NEW_PRODUCT_CHANNEL) || channelId.equals(DiscordString.EIC_DISCOUNT_CHANNEL)) {
             returnMessage = discordMessageProcessor.responseServerRunningOrNull("eic", event.getMessage().getContentDisplay(), chromeDriverToolFactory.getChromeDriverTool("eic"));
-        }
-        else if (channelId.equals(DiscordString.GEBENE_NEW_PRODUCT_CHANNEL)) {
+        } else if (channelId.equals(DiscordString.GEBENE_NEW_PRODUCT_CHANNEL)) {
             if (event.getMessage().getContentDisplay().contains("!upload")) {
                 returnMessage = discordMessageProcessor.responseServerRunningS3ServiceOrNull(event.getMessage().getContentDisplay(), s3UploaderService);
             } else {
@@ -144,6 +146,29 @@ public class DiscordBot extends ListenerAdapter {
         String skuInfoToString = String.join(" ", skuInfo);
         textChannel.sendMessageEmbeds(embed.build()).queue();
         textChannel.sendMessage(skuInfoToString).queue(); // 품번도 같이 전송
+    }
+
+    public void sendAutoOrderMessage(Long channelId, String headerMessage, String description, String productLink, String[] skuInfo, Color color) {
+        final TextChannel textChannel = jda.getTextChannelById(channelId);
+        assert (textChannel != null);
+
+        // Embed 생성
+        EmbedBuilder embed = new EmbedBuilder();
+
+        embed.setTitle(headerMessage);
+        embed.setDescription(description);
+        embed.appendDescription(String.format("%nThread Name : %s%n", Thread.currentThread().getName()));
+        embed.setColor(color);
+
+        embed.addField("사이트 상품 바로가기", "[상세페이지 바로가기](" + productLink + ")", false); // false는 필드가 인라인으로 표시되지 않도록 설정합니다.
+
+        textChannel.sendMessageEmbeds(embed.build()).queue();
+        if (skuInfo.length > 0 && !skuInfo[0].isBlank()) {
+            String skuInfoToString = String.join(" ", skuInfo);
+            textChannel.sendMessage(skuInfoToString).queue(); // 품번도 같이 전송
+        }
+
+
     }
 
     public void setS3UploaderService(S3UploaderService s3UploaderService) {

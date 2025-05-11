@@ -56,6 +56,12 @@ public class Product {
     private String sku;
 
     /**
+     * 가격 단위 유로화(공통)
+     */
+    @Column
+    private double price;
+
+    /**
      * 상품명 (최대 100자)
      */
     @Column(length = 100)
@@ -88,11 +94,11 @@ public class Product {
             String link,
             String imageSrc
     ) {
-        this.boutique  = boutique;
-        this.brand     = brand;
-        this.sku       = sku;
-        this.name      = name;
-        this.link      = link;
-        this.imageSrc  = imageSrc;
+        this.boutique = boutique;
+        this.brand = brand;
+        this.sku = sku;
+        this.name = name;
+        this.link = link;
+        this.imageSrc = imageSrc;
     }
 }

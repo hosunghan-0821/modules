@@ -33,4 +33,6 @@ public class DiscordString {
     public static final Long ZENTE_NEW_PRODUCT_CHANNEL = 1347829780174602345L;
 
     public static final Long ZENTE_DISCOUNT_CHANNEL = 1347829868649386054L;
+
+    public static final Long GNB_AUTO_ORDER_CHANNEL = 1370983369474572368L;
 }
