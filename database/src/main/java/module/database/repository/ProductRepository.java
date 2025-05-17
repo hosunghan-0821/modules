@@ -99,6 +99,10 @@ public class ProductRepository {
         return Optional.ofNullable(result);
     }
 
+    public List<Product> findAutoOrderProducts(List<String> sku, String boutique) {
+        return jpaQueryFactory.selectFrom(product).where(product.sku.in(sku).and(product.boutique.eq(boutique))).fetch();
+    }
+
     ;
 
     /**
