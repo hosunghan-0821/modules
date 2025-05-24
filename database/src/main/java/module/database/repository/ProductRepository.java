@@ -10,8 +10,10 @@ import module.database.dto.Boutique;
 import module.database.entity.Monitor;
 import module.database.entity.Product;
 import module.database.entity.ProductSize;
+import module.database.entity.ProductSkuToken;
 import module.database.entity.QProduct;
 import module.database.entity.QProductSize;
+import module.database.entity.QProductSkuToken;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +29,7 @@ import java.util.Optional;
 import static module.database.entity.QMonitor.monitor;
 import static module.database.entity.QProduct.product;
 import static module.database.entity.QProductSize.productSize;
+import static module.database.entity.QProductSkuToken.productSkuToken;
 import static org.springframework.util.StringUtils.hasText;
 
 @Repository
@@ -67,6 +70,11 @@ public class ProductRepository {
         entityManager.flush();
     }
 
+    public void saveAllProductSkuToken(List<ProductSkuToken> productTokens) {
+        productTokens.forEach(entityManager::persist);
+        entityManager.flush();
+    }
+
     public void deleteAllProductSize(List<Long> deleteIds) {
         jpaQueryFactory.delete(productSize).where(productSize.id.in(deleteIds)).execute();
         entityManager.flush();
@@ -88,6 +96,10 @@ public class ProductRepository {
 
     public void deleteProductSize(Long productId) {
         jpaQueryFactory.delete(productSize).where(product.id.eq(productId)).execute();
+    }
+
+    public void deleteProductSkuToken(Long productId) {
+        jpaQueryFactory.delete(productSkuToken).where(product.id.eq(productId)).execute();
     }
 
     public Optional<Product> findAutoOrderProduct(String sku, String boutique) {
@@ -118,6 +130,7 @@ public class ProductRepository {
                 .or(product.boutique.equalsIgnoreCase(keyword))
                 .or(product.brand.equalsIgnoreCase(keyword));
     }
+
 
 
 }

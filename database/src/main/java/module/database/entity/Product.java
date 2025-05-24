@@ -1,6 +1,5 @@
 package module.database.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -82,6 +81,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductSize> productSize = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<ProductSkuToken> productToken = new ArrayList<>();
 
     /**
      * 상품 정보 일괄 갱신
