@@ -115,7 +115,10 @@ public class ProductRepository {
         return jpaQueryFactory.selectFrom(product).where(product.sku.in(sku).and(product.boutique.eq(boutique))).fetch();
     }
 
-    ;
+    @Transactional(readOnly = true)
+    public List<ProductSkuToken> findAllSkuTokens() {
+        return jpaQueryFactory.selectFrom(productSkuToken).fetch();
+    }
 
     /**
      * keyword 가 널이거나 빈 문자열이면 null 리턴(조건 미적용),
