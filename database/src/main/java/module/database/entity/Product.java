@@ -101,7 +101,9 @@ public class Product {
             String sku,
             String name,
             String link,
-            String imageSrc
+            String imageSrc,
+            double price,
+            long count
     ) {
         this.boutique = boutique;
         this.brand = brand;
@@ -109,5 +111,7 @@ public class Product {
         this.name = name;
         this.link = link;
         this.imageSrc = imageSrc;
+        this.price = price;
+        this.count = count;
     }
 }
