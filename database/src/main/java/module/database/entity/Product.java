@@ -78,6 +78,12 @@ public class Product {
     @Column(name = "image_src", length = 100)
     private String imageSrc;
 
+    /**
+     * 최대 상품 주문 개수
+     */
+    @Column(name = "count")
+    private Long count;
+
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductSize> productSize = new ArrayList<>();
