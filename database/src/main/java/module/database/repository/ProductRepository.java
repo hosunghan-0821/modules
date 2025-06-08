@@ -78,6 +78,7 @@ public class ProductRepository {
     }
 
     public void deleteAllProduct(List<Long> productIds) {
+        jpaQueryFactory.delete(productSkuToken).where(productSkuToken.product.id.in(productIds)).execute();
         jpaQueryFactory.delete(productSize).where(productSize.product.id.in(productIds)).execute();
         jpaQueryFactory.delete(product).where(product.id.in(productIds)).execute();
     }
