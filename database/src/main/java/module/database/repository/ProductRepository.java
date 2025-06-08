@@ -112,6 +112,14 @@ public class ProductRepository {
         return jpaQueryFactory.selectFrom(productSkuToken).fetch();
     }
 
+    public void updateOrderNum(long productId, long orderNum) {
+
+        jpaQueryFactory.update(product)
+                .set(product.count, orderNum)
+                .where(product.id.eq(productId))
+                .execute();
+    }
+
     /**
      * keyword 가 널이거나 빈 문자열이면 null 리턴(조건 미적용),
      * 그 외엔 SKU OR name OR description 에 LIKE 검색
