@@ -6,27 +6,19 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import module.database.dto.Boutique;
-import module.database.entity.Monitor;
 import module.database.entity.Product;
 import module.database.entity.ProductSize;
 import module.database.entity.ProductSkuToken;
-import module.database.entity.QProduct;
-import module.database.entity.QProductSize;
-import module.database.entity.QProductSkuToken;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static module.database.entity.QMonitor.monitor;
 import static module.database.entity.QProduct.product;
 import static module.database.entity.QProductSize.productSize;
 import static module.database.entity.QProductSkuToken.productSkuToken;
@@ -135,5 +127,25 @@ public class ProductRepository {
     }
 
 
+    public List<Product> findAllProductsInBatch() {
+        int chunkSize = 100;
+        long offset = 0;
 
+        List<Product> allProducts = new ArrayList<>();
+        List<Product> batch;
+
+        do {
+            batch = jpaQueryFactory
+                    .selectFrom(product)
+                    .orderBy(product.id.desc())
+                    .offset(offset)
+                    .limit(chunkSize)
+                    .fetch();
+
+            allProducts.addAll(batch);
+            offset += chunkSize;
+        } while (batch.size() == chunkSize);
+
+        return allProducts;
+    }
 }
