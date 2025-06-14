@@ -115,8 +115,9 @@ public class ProductRepository {
 
     public void updateOrderNum(long productId, long orderNum) {
 
-        jpaQueryFactory.update(product)
-                .set(product.count, orderNum)
+        jpaQueryFactory
+                .update(product)
+                .set(product.count, product.count.subtract(orderNum))   // 또는 .add(-orderNum)
                 .where(product.id.eq(productId))
                 .execute();
     }
