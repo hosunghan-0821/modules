@@ -39,4 +39,6 @@ public class DiscordString {
     public static final Long GNB_AUTO_ORDER_FAIL_CHANNEL = 1374330356412710914L;
 
     public static final Long GNB_AUTO_ORDER_LOG_CHANNEL = 1377616579801514094L;
+
+    public static final Long GNB_TEST_ORDER_LOG_CHANNEL = 1383257544616706109L;
 }
