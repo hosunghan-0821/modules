@@ -43,4 +43,9 @@ public class DiscordString {
     public static final Long GNB_AUTO_ORDER_LOG_CHANNEL = 1377616579801514094L;
 
     public static final Long GNB_TEST_ORDER_LOG_CHANNEL = 1383257544616706109L;
+
+    public static final Long THE_CLUB_NEW_PRODUCT_CHANNEL = 1410566575651684362L;
+
+    public static final Long THE_CLUB_DISCOUNT_CHANGE_CHANNEL = 1410566611852853298L;
+
 }
